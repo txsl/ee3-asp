@@ -11,19 +11,6 @@ c = rp3(100,100)
 assignin('base', 'c', c)
 plot(c)
 
-a = rp1(100,100)
-assignin('base', 'a', a)
-plot(a) % Do mean() and std()
-figure;
-b = rp2(100,100)
-assignin('base', 'b', b)
-plot(b)
-figure;
-c = rp3(100,100)
-assignin('base', 'c', c)
-plot(c)
-
-
 M = 4;
 N = 1000;
 a = rp1(M,N)
