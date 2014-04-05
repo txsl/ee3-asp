@@ -1,36 +1,45 @@
 function a = ASP_Part_1_2()
-a = rp1(100,100)
+close all;
+
+M = 1000;
+N = 100;
+
+a = rp1(M,N);
 assignin('base', 'a', a)
-plot(a) % Do mean() and std()
+plot(mean(a))
 figure;
-b = rp2(100,100)
+b = rp2(M,N);
 assignin('base', 'b', b)
-plot(b)
+plot(mean(b))
 figure;
-c = rp3(100,100)
+c = rp3(M,N);
 assignin('base', 'c', c)
-plot(c)
+plot(mean(c))
 
 M = 4;
 N = 1000;
-a = rp1(M,N)
+
+a = rp1(M,N);
 assignin('base', 'a', a)
-plot(a)
+plot(mean(a))
 figure;
-b = rp2(M,N)
+b = rp2(M,N);
 assignin('base', 'b', b)
-plot(b)
+plot(mean(b))
 figure;
-c = rp3(M,N)
+c = rp3(M,N);
 assignin('base', 'c', c)
-plot(c.')
+plot(mean(c))
+
 end
 
 function v=rp1(M,N)
 a=0.02;
 b=5;
 Mc=ones(M,1)*b*sin((1:N)*pi/N);
+assignin('base', 'Mc', Mc);
 Ac=a*ones(M,1)*[1:N];
+assignin('base', 'Ac', Ac);
 v=(rand(M,N)-0.5).*Mc+Ac;
 end
 
