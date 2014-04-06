@@ -25,12 +25,12 @@ plot(a1stable, a2stable, '*')
 
 
 % a1 = -2.5:0.1:2.5;
-a2 = -1.5:0.01:1.5;
+a2 = -1.5:0.1:1.5;
 
 a1stable = [];
 a2stable = [];
 
-for i = -2.5:0.01:2.5
+for i = -2.5:0.1:2.5
     for k = 1:length(a2)
         w = randn(1000, 1);
         x = zeros(1000, 1);
@@ -39,7 +39,7 @@ for i = -2.5:0.01:2.5
         for j = 3:1000
             x(j) = i*x(j-1) + a2(k)*x(j-2);
         end
-        if(abs(x(1000)) < 1000)
+        if(abs(x(1000)) < 10)
             a1stable = [a1stable i];
             a2stable = [a2stable a2(k)];
         end
