@@ -48,3 +48,40 @@ end
 
 figure;
 plot(a1stable, a2stable, '*')
+
+
+% 2.4.2 Sunspot Models
+load('sunspot.dat')
+N5 = xcorr(sunspot(50:55, 2));
+figure;
+subplot(3, 1, 1)
+plot(N5)
+
+subplot(3, 1, 2)
+N20 = xcorr(sunspot(50:69, 2));
+plot(N20)
+
+subplot(3, 1, 3)
+N250 = xcorr(sunspot(1:250, 2));
+plot(N250)
+
+
+% Here we take the zero mean version
+sm = mean(sunspot(:, 2));
+zms = sunspot(:, 2) - sm;
+
+figure;
+plot(xcorr(zms(1:250)))
+
+%% 2.4.3
+
+figure;
+A = aryule(sunspot(:, 2), 10);
+
+% For the zero mean and unit variance version
+Auv = aryule(zscore(sunspot(:, 2)), 10);
+
+hold on;
+stem(1:11, A)
+stem(1:11, Auv, 'diamondr')
+legend('', 'Zero Mean, Unit Variance')
