@@ -28,7 +28,7 @@ xlabel('Ensemble Iteration');
 ylabel('Bias');
 
 subplot(1,2,2)
-stem(1:10, s10- 0.2887);
+stem(1:10, 0.2887 - s10);
 title('Standard Deviation Bias');
 xlabel('Ensemble Iteration');
 ylabel('Bias');
@@ -42,9 +42,9 @@ a = hist(X(:,1));
 a = a/1000;
 
 figure;
-bar([0.1:0.1:1] , a)
-xlim([0 1.1])
-hline = refline([0 0.1]);
+bar(0.1:0.1:1 , a); % We set our x axis correctly
+xlim([0 1.1])  % Set the x axis limits correctly
+hline = refline([0 0.1]); % Add the theoretical line
 set(hline,'Color','r')
 title('pdf of 1000 samples, in 10 bins');
 xlabel('x');
@@ -57,7 +57,7 @@ a = hist(X1(:,1), 50);
 a = a/1000;
 
 figure;
-bar([0.02:0.02:1], a);
+bar(0.02:0.02:1, a);
 xlim([0 1.02]);
 hline = refline([0 0.02]);
 set(hline,'Color','r')
@@ -71,8 +71,8 @@ legend('Actual pdf', 'Theoretical pdf');
 figure
 a = hist(X(1:100,1), 10);
 a = a/100; % Normalised by 100 samples this time
-bar([0.02:0.02:1], a);
-xlim([0 1.02]);
+bar(0.1:0.1:1, a); 
+xlim([0 1.1]); 
 hline = refline([0 0.1]);
 set(hline,'Color','r')
 title('pdf of 100 samples, in 10 bins');
@@ -83,16 +83,41 @@ legend('Actual pdf', 'Theoretical pdf');
 
 %% 1.1.5 
 
-X = randn(1000, 1);
-mean(X)
-std(X)
-
-X = randn(1000, 10);
-m = mean(X);
-s = std(X);
+Xg = randn(1000, 10);
+mg = mean(Xg);
+sg = std(Xg);
 
 figure;
-bar(m)
+subplot(1,2,1)
+stem(1:10, 0-mg);
+title('Mean Bias');
+xlabel('Ensemble Iteration');
+ylabel('Bias');
+
+subplot(1,2,2)
+stem(1:10, sg - 1);
+title('Standard Deviation Bias');
+xlabel('Ensemble Iteration');
+ylabel('Bias');
+
 
 figure;
-bar(s)
+[a, bins] = hist(Xg(:,1));
+
+% Normalise the histogram based on our sample size (to create a p.d.f.)
+a = a/1000;
+
+bar(bins, a);
+title('pdf of 1000 samples');
+xlabel('x');
+ylabel('Density');
+
+% Now let's have 30 bins. It's the same as just above really
+figure;
+[a, bins] = hist(Xg(:,1), 30);
+a = a/1000;
+
+bar(bins, a);
+title('pdf of 1000 samples, with 30 bins');
+xlabel('x');
+ylabel('Density');
