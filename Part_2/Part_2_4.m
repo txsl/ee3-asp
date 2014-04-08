@@ -77,36 +77,162 @@ title('Series generated processes to show the stability triangle');
 
 %% 2.4.2 Sunspot Models
 load('sunspot.dat')
-N5 = xcorr(sunspot(50:55, 2));
+sunspotdata = sunspot(:, 2);
+figure;
+
+N5 = xcorr(sunspotdata(50:55));
+subplot(3, 1, 1);
+plot(N5);
+title('Sunspots Autocorrelation, N=5');
+xlabel('Correlation Lag');
+ylabel('Correlation');
+
+subplot(3, 1, 2)
+N20 = xcorr(sunspotdata(50:69));
+plot(N20);
+title('Sunspots Autocorrelation, N=20');
+xlabel('Correlation Lag');
+ylabel('Correlation');
+
+subplot(3, 1, 3)
+N250 = xcorr(sunspotdata(1:250));
+plot(N250)
+title('Sunspots Autocorrelation, N=250');
+xlabel('Correlation Lag');
+ylabel('Correlation');
+
+% Here we take the zero mean version
+sm = mean(sunspotdata);
+zms = sunspotdata - sm;
+
+figure;
+N5 = xcorr(zms(50:55));
 figure;
 subplot(3, 1, 1)
 plot(N5)
+title('Zero Mean Sunspots Autocorrelation, N=5');
+xlabel('Correlation Lag');
+ylabel('Correlation');
 
 subplot(3, 1, 2)
-N20 = xcorr(sunspot(50:69, 2));
+N20 = xcorr(zms(50:69));
 plot(N20)
+title('Zero Mean Sunspots Autocorrelation, N=20');
+xlabel('Correlation Lag');
+ylabel('Correlation');
+
 
 subplot(3, 1, 3)
-N250 = xcorr(sunspot(1:250, 2));
+N250 = xcorr(zms(1:250));
 plot(N250)
+title('Zero Mean Sunspots Autocorrelation, N=250');
+xlabel('Correlation Lag');
+ylabel('Correlation');
 
-
-% Here we take the zero mean version
-sm = mean(sunspot(:, 2));
-zms = sunspot(:, 2) - sm;
-
-figure;
-plot(xcorr(zms(1:250)))
 
 %% 2.4.3
 
-figure;
-A = aryule(sunspot(:, 2), 10);
+A = 1;
+
+for i = 1:10
+    out = aryule(sunspotdata, i);
+    A = [A out(i+1)];
+end
 
 % For the zero mean and unit variance version
-Auv = aryule(zscore(sunspot(:, 2)), 10);
+Auv = 1;
+zmsunscore = zscore(sunspotdata);
 
+for i = 1:10
+    out = aryule(zmsunscore, i);
+    Auv = [Auv out(i+1)];
+end
+
+figure;
 hold on;
 stem(1:11, A)
 stem(1:11, Auv, 'diamondr')
-legend('', 'Zero Mean, Unit Variance')
+legend('PCF (Partial Correlation Function)', 'PCF with Zero Mean, Unit Variance')
+
+
+%% 2.4.4
+
+N = length(sunspotdata);
+
+MDL = [];
+AIC = [];
+Error = [];
+
+for i = 1:50
+    % We can use E as the square of the 
+   [a, E] = aryule(sunspotdata, i);
+   MDL = [MDL (log(E) + (i*log(N)/N))];
+   AIC = [AIC (log(E) + 2*i/N)];
+   Error = [Error log(E)];
+end
+
+figure;
+plot(MDL);
+hold on;
+plot(AIC, 'r');
+plot(Error, 'g')
+
+xlim([1 50]);
+legend('MDL', 'AIC', 'Cumulative Squared Error');
+xlabel('Model Order');
+ylabel('Model Error');
+title('MDL, AIC and Cumulative Squared Error');
+grid on;
+
+%%  2.4.5
+
+a1 = aryule(sunspotdata,1);
+a2 = aryule(sunspotdata,2);
+a10 = aryule(sunspotdata,10);
+
+for i = 2:length(a1)
+    a1(i) = -a1(i);
+end
+for i = 2:length(a2)
+    a2(i) = -a2(i);
+end
+for i = 2:length(a10)
+    a10(i) = -a10(i);
+end
+
+% x1 = vertcat(zeros(8,1), sunspotdata(9:10), zeros(10,1));
+% x2 = vertcat(zeros(7,1), sunspotdata(8:10), zeros(10,1));
+% x10 = vertcat(sunspotdata(1:10), zeros(10,1));
+
+x1 = sunspotdata(1:10);
+x2 = sunspotdata(1:10);
+x3 = sunspotdata(1:10);
+x4 = sunspotdata(1:10);
+actual = sunspotdata(1:20);
+ 
+for i = 1:10
+    x1(i+10) = a1(2)*x1(i+9);
+    x2(i+10) = a2(2)*x2(i+9) + a2(3)*x2(i+8);
+    x3(i+10) = a10(2)*x3(i+9) + a10(3)*x3(i+8) + a10(4)*x3(i+7) + a10(5)*x3(i+6) + a10(6)*x3(i+5) + a10(7)*x3(i+4) + a10(8)*x3(i+3) + a10(9)*x3(i+2) + a10(10)*x3(i+1) + a10(11)*x3(i);
+%     x3(i+10) = a10(1)*x3(i+9) - a10(2)*x3(i+8) - a10(3)*x3(i+7) - a10(4)*x3(i+6) - a10(5)*x3(i+5) - a10(6)*x3(i+4) - a10(7)*x3(i+3) - a10(8)*x3(i+2) - a10(9)*x3(i+1) - a10(10)*x3(i);
+%     b=0;
+%     for k = 2:length(a10)
+%        b = a10(k)*x3(11-k+i);
+%     end
+%     x3(i+10) = b;
+    x4(i+10) = a10(2)*x4(i+9) + a10(3)*x4(i+8) + a10(4)*x4(i+7) + a10(5)*x4(i+6) + a10(6)*x4(i+5) + a10(7)*x4(i+4) + a10(8)*x4(i+3) + a10(9)*x4(i+2) + a10(10)*x4(i+1) + a10(11)*x4(i);
+    
+end
+% x1 = filter(a1, 1, x1);
+% x2 = filter(a2, 1, x2);
+% x10 = filter(a10, 1, x10);
+
+
+figure;
+hold on;
+plot(x1);
+plot(x2, 'c');
+plot(x3, 'g');
+plot(x4, 'c');
+plot(actual, 'r');
+legend('AR(1)', 'AR(2)', 'AR(10)', 'AR(10)2', 'Actual');
