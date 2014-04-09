@@ -42,6 +42,8 @@ a = hist(X(:,1));
 a = a/1000;
 
 figure;
+
+subplot(1,2,1)
 bar(0.1:0.1:1 , a); % We set our x axis correctly
 xlim([0 1.1])  % Set the x axis limits correctly
 hline = refline([0 0.1]); % Add the theoretical line
@@ -49,14 +51,14 @@ set(hline,'Color','r')
 title('pdf of 1000 samples, in 10 bins');
 xlabel('x');
 ylabel('Density');
-legend('Actual pdf', 'Theoretical pdf');
+legend('Actual pdf', 'Theoretical pdf', 'Location', 'SouthEast');
 
 
 % This time we are splitting the pdf in to 50 bins
 a = hist(X1(:,1), 50);
 a = a/1000;
 
-figure;
+subplot(1,2,2)
 bar(0.02:0.02:1, a);
 xlim([0 1.02]);
 hline = refline([0 0.02]);
@@ -64,7 +66,7 @@ set(hline,'Color','r')
 title('pdf of 1000 samples, in 50 bins');
 xlabel('x');
 ylabel('Density');
-legend('Actual pdf', 'Theoretical pdf');
+legend('Actual pdf', 'Theoretical pdf', 'Location', 'SouthEast');
 
 
 % This time, we are just using 100 samples
@@ -102,22 +104,32 @@ ylabel('Bias');
 
 
 figure;
+subplot(1,2,1);
 [a, bins] = hist(Xg(:,1));
 
 % Normalise the histogram based on our sample size (to create a p.d.f.)
 a = a/1000;
 
 bar(bins, a);
-title('pdf of 1000 samples');
+title('pdf of 1000 samples, in 10 bins');
 xlabel('x');
 ylabel('Density');
 
-% Now let's have 30 bins. It's the same as just above really
-figure;
+% Now let's have 30 bins.
+subplot(1,2,2);
 [a, bins] = hist(Xg(:,1), 30);
 a = a/1000;
 
 bar(bins, a);
-title('pdf of 1000 samples, with 30 bins');
+title('pdf of 1000 samples, in 30 bins');
+xlabel('x');
+ylabel('Density');
+
+% This time with fewer samples
+figure;
+[a, bins] = hist(Xg(1:100, 1));
+a = a/100;
+bar(bins, a);
+title('pdf of 100 samples');
 xlabel('x');
 ylabel('Density');
