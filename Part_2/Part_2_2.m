@@ -1,4 +1,4 @@
-clear all; close all;
+clear all; close all; clc;
 
 x = randn(1, 1000);
 y = filter(ones(9,1),[1],x);
