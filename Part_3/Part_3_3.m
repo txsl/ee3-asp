@@ -8,7 +8,6 @@ path(path, '../voicebox');
 number = [ 0 2 0 7 5 9 4 6 2 7 1 ];
 
 Fsamp = 32768;
-nyq = (Fsamp/2)- 1;
 
 fh1 = 697; fv1 = 1209;
 fh2 = 770; fv2 = 1336;
