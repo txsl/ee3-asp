@@ -33,13 +33,37 @@ n = 1:N/2; % The number of
 dial = zeros(1, (N*length(number)) - N/2);
 
 for i = 1:length(number)
+    
     digit = number(i);
     tone = freqs(digit+1,:);
     f1 = tone(1);
     f2 = tone(2);
+    
     signal = (sin((2*pi*f1*n)/Fsamp) + sin((2*pi*f2*n)/Fsamp))/2;
     dial(((i*N) - N)+1:((i*N)-N/2)) = signal;
 end
 
 sound(dial.', Fsamp);
-plot(dial)
+
+plot((1:length(dial))/Fsamp, dial)
+    xlim([0 5.25])
+    xlabel('Time (seconds)');
+    ylabel('Amplitude');
+    title('London DMTF Number being dialled');
+    
+figure;
+subplot(1,2,1);
+plot((1:length(dial))/Fsamp, dial)
+    xlim([0 5.25])
+    xlabel('Time (seconds)');
+    ylabel('Amplitude');
+    title('0 dialtone, then deadtime');
+    xlim([.23 .255])
+    
+subplot(1,2,2);
+plot((1:length(dial))/Fsamp, dial)
+    xlim([0 5.25])
+    xlabel('Time (seconds)');
+    ylabel('Amplitude');
+    title('Deadtime, then 5 dialtone');
+    xlim([1.99 2.03])
