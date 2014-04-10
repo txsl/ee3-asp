@@ -40,7 +40,7 @@ var1 = R(1024) + a1*R(1025);
 f = w/(2*pi);
 
 % Pesty = (var1)/abs(1+a1*exp(-1i*2*pi*f)).^2;
-Pesty = freqz([var1], [1, a1], 512);
+Pesty = freqz(var1, [1, a1], 512);
 % figure;
 % plot(w/(2*pi),abs(Pesty).^2, 'r', w/(2*pi), abs(h).^2)
 % 
