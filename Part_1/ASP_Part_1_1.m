@@ -23,15 +23,15 @@ s10 = std(X);
 figure;
 subplot(1,2,1)
 stem(1:10, 0.5-m10);
-title('Mean Bias');
-xlabel('Ensemble Iteration');
-ylabel('Bias');
+    title('Mean Bias');
+    xlabel('Ensemble Iteration');
+    ylabel('Bias');
 
 subplot(1,2,2)
 stem(1:10, 0.2887 - s10);
-title('Standard Deviation Bias');
-xlabel('Ensemble Iteration');
-ylabel('Bias');
+    title('Standard Deviation Bias');
+    xlabel('Ensemble Iteration');
+    ylabel('Bias');
 
 %% 1.1.4
 
@@ -42,16 +42,15 @@ a = hist(X(:,1));
 a = a/1000;
 
 figure;
-
 subplot(1,2,1)
 bar(0.1:0.1:1 , a); % We set our x axis correctly
-xlim([0 1.1])  % Set the x axis limits correctly
-hline = refline([0 0.1]); % Add the theoretical line
-set(hline,'Color','r')
-title('pdf of 1000 samples, in 10 bins');
-xlabel('x');
-ylabel('Density');
-legend('Actual pdf', 'Theoretical pdf', 'Location', 'SouthEast');
+    xlim([0 1.1])  % Set the x axis limits correctly
+    hline = refline([0 0.1]); % Add the theoretical line
+    set(hline,'Color','r')
+    title('pdf of 1000 samples, in 10 bins');
+    xlabel('x');
+    ylabel('Density');
+    legend('Actual pdf', 'Theoretical pdf', 'Location', 'SouthEast');
 
 
 % This time we are splitting the pdf in to 50 bins
@@ -60,25 +59,25 @@ a = a/1000;
 
 subplot(1,2,2)
 bar(0.02:0.02:1, a);
-xlim([0 1.02]);
-hline = refline([0 0.02]);
-set(hline,'Color','r')
-title('pdf of 1000 samples, in 50 bins');
-xlabel('x');
-ylabel('Density');
-legend('Actual pdf', 'Theoretical pdf', 'Location', 'SouthEast');
+    xlim([0 1.02]);
+    hline = refline([0 0.02]);
+    set(hline,'Color','r')
+    title('pdf of 1000 samples, in 50 bins');
+    xlabel('x');
+    ylabel('Density');
+    legend('Actual pdf', 'Theoretical pdf', 'Location', 'SouthEast');
 
 
 % This time, we are just using 100 samples
 figure;
-a = hist(X(1:100,1), 10);
+a = hist(X(1:100,1), 10); % Specify 10 bins
 a = a/100; % Normalised by 100 samples this time
 bar(0.1:0.1:1, a); 
-xlim([0 1.1]); 
-hline = refline([0 0.1]);
-set(hline,'Color','r')
-title('pdf of 100 samples, in 10 bins');
-xlabel('x');
-ylabel('Density');
-legend('Actual pdf', 'Theoretical pdf');
+    xlim([0 1.1]); 
+    hline = refline([0 0.1]);
+    set(hline,'Color','r')
+    title('pdf of 100 samples, in 10 bins');
+    xlabel('x');
+    ylabel('Density');
+    legend('Actual pdf', 'Theoretical pdf');
 
