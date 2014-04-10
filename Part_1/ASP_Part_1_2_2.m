@@ -1,16 +1,21 @@
 close all; clear all; clc;
 
+%% 1.2.2
+
 M = 4;
 N = 1000;
 
+% rp1
 a = rp1(M,N);
-assignin('base', 'a', a)
-plot(mean(a))
-figure;
+ma = mean(a.');
+sa = std(a.');
+
+% rp2
 b = rp2(M,N);
-assignin('base', 'b', b)
-plot(mean(b))
-figure;
+mb = mean(b.');
+sb = std(b.');
+
+% rp3
 c = rp3(M,N);
-assignin('base', 'c', c)
-plot(mean(c))
+mc = mean(c.');
+sc = std(c.');
