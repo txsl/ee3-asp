@@ -12,10 +12,14 @@ MDL = [];
 AIC = [];
 Error = [];
 
+MDL = zeros(1,50);
+
 for i = 1:50
-    % We can use E as the square of the 
+    % We can use E as the error. We append the last value to each vector
+   
    [a, E] = aryule(sunspotdata, i);
-   MDL = [MDL (log(E) + (i*log(N)/N))];
+    sprintf('%d', E)
+   MDL(i) = log(sum(E)) + (i*log(N)/N);
    AIC = [AIC (log(E) + 2*i/N)];
    Error = [Error log(E)];
 end

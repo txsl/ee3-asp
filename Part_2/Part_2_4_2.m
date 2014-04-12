@@ -16,7 +16,7 @@ plot(sunspot(:,1), sunspotdata);
 figure;
 
 % The first set of data, for N = 5
-[N5,lag] = xcorr(sunspotdata(1:5), 'unbiased');
+[N5,lag] = xcorr(sunspotdata(1:6), 'unbiased');
 subplot(3, 1, 1);
 stem(lag, N5);
     title('Sunspots Autocorrelation, N=5');
@@ -42,14 +42,12 @@ stem(lag, N250)
     ylabel('Correlation');
     grid on;
     
-% Here we take the zero mean version
-sm = mean(sunspotdata);
-zms = sunspotdata - sm;
-
+% Now we take the zero mean version. We substract the mean of the samples
+% being autocorrelated
 figure;
 
 subplot(3, 1, 1)
-[y, lag] = xcorr(zms(1:6), 'unbiased');
+[y, lag] = xcorr(sunspotdata(1:6) - mean(sunspotdata(1:6)), 'unbiased');
 stem(lag, y)
     title('Zero Mean Sunspots Autocorrelation, N=5');
     xlabel('Correlation Lag');
@@ -57,7 +55,7 @@ stem(lag, y)
     grid on;
     
 subplot(3, 1, 2)
-[y, lag] = xcorr(zms(1:21), 'unbiased');
+[y, lag] = xcorr(sunspotdata(1:21) - mean(sunspotdata(1:21)), 'unbiased');
 stem(lag, y)
     title('Zero Mean Sunspots Autocorrelation, N=20');
     xlabel('Correlation Lag');
@@ -65,22 +63,9 @@ stem(lag, y)
     grid on;
     
 subplot(3, 1, 3)
-[y, lag] = xcorr(zms(1:251), 'unbiased');
-stem(lag, y)
+[y, lag] = xcorr(sunspotdata(1:251) - mean(sunspotdata(1:251)), 'unbiased');
+stem(lag, y, 'Marker', 'none')
     title('Zero Mean Sunspots Autocorrelation, N=250');
     xlabel('Correlation Lag');
     ylabel('Correlation');
     grid on;
-
-    
-    N = 5;
-    year=sunspot(1:N,1);
-x =sunspot(:,2);
-%% plot sunspot data
-figure;
- %% Plot autocorrelation
- x = x -mean(x);
- x = x(1:N);
- [a,b] = xcorr(x, 'unbiased');
- figure;
- stem(b,a)
