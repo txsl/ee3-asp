@@ -5,11 +5,12 @@ sunspotdata = sunspot(:, 2);
 
 %% 3.2.5
 
-% Take the periodogram of our sunspot data
-ssp = pgm(sunspotdata.');
-
 % Create the zero mean version of the data
 zms = sunspotdata - mean(sunspotdata);
+
+% Take the periodogram of our sunspot data
+ssp = pgm(sunspotdata.');
+zmssp = pgm(zms.'); % nb the periodograms should be the same regardless of zero mean. But in case they are not..
 
 % Initialise our loop counting value
 k = 1;
@@ -40,7 +41,7 @@ for i = [ 2, 9, 15 ] % <- our chosen Model Orders to test
    
     subplot(2,3,k+3)
         hold on;
-        plot(w/(2*pi), ssp(1:145));
+        plot(w/(2*pi), zmssp(1:145));
         plot(w/(2*pi), abs(pxx), 'r'); % Theoretical PSD
         hold off;
         xlim([0 0.25]);
