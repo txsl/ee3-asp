@@ -15,6 +15,7 @@ var_coeffs = [.5 1.2 3];
 three_noise = zeros(3, N);
 star_noise = zeros(3, N);
 
+% Different vectors of the different noise levels
 for i = 1:3
     three_noise(i,:) = three_tone + var_coeffs(i)*randn(1,N);
     star_noise(i,:) = star_tone + var_coeffs(i)*randn(1,N);    
@@ -30,6 +31,7 @@ for i = 1:3
     for k = 1:100
         [~, E] = aryule(three_noise(i,:),k); 
         three_error(i,k) = log(E) + (k*log(N)/N);
+        
         [~, E] = aryule(star_noise(i,:),k); 
         star_error(i,k) = log(E) + (k*log(N)/N);
     end
@@ -43,16 +45,18 @@ for i = 1:3
         xlabel('Model Order');
         ylabel('Model Error');
         grid on;
+        title(sprintf('MLD Estimate for "three" tone with \\sigma=%1.1f', var_coeffs(i)));
     
     subplot(2,3,i+3);
     plot(1:100, star_error(i,:));
         xlabel('Model Order');
         ylabel('Model Error');
         grid on;
+        title(sprintf('MLD Estimate for "star" tone with \\sigma=%1.1f', var_coeffs(i)));
 end
 
 % These are the chosen model orders (based on the MLD plots)
-three_order = [ 42 42 42 ];
+three_order = [ 45 42 42 ];
 star_order = [ 18 18 38 ];
 
 % Now we populate the arrays of filter parameters
@@ -69,17 +73,24 @@ figure;
 for i = 1:3
    params = three_params(i,:);
    [ theor, w ]= freqz(1, params, 512);
-   act = filter(1, params, randn(1,1064));
-   fact = pgm(act(40:end));
-   real = pgm(three_tone(1:1024));
    
    subplot(2,3,i);
-   plot(w/(2*pi), abs(theor), w/(2*pi), fact(1:512), 'g:', w/(2*pi), real(1:512));
-        grid on;
+   plot(w/(2*pi), abs(theor));
+   grid on;
         xlabel('Normalised Frequency');
+        ylabel('Magnitude');
+        title(sprintf('AR Process for "three" tone with \\sigma=%1.1f', var_coeffs(i)));
         
    
+   params = star_params(i,:);
+   [ theor, w ]= freqz(1, params, 512);
    
+   subplot(2,3,i+3);
+   plot(w/(2*pi), abs(theor));
+   grid on;
+        xlabel('Normalised Frequency');
+        ylabel('Magnitude');
+        title(sprintf('AR Process for "star" tone with \\sigma=%1.1f', var_coeffs(i)));
 end
 
 
