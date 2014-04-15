@@ -4,13 +4,15 @@ clear all; close all; clc;
 
 mus = [0.002, 0.1, 0.25, 0.5];
 
+
+% Initialise coefficients and signals
+Nw = 4;
+x = randn(1,1000);
+y = filter([1, 2, 3, 2, 1], 1, x);
+n = 0.1*randn(1,1000);
+z = y + n;
+
 for k = 1:length(mus)
-    % Initialise coefficients and signals
-    Nw = 4;
-    x = randn(1,1000);
-    y = filter([1, 2, 3, 2, 1], 1, x);
-    n = 0.1*randn(1,1000);
-    z = y + n;
 
     % Use out lms function to estimate coefficients
     [y_lms, e_lms, w_lms] = lms(x, z, mus(k), Nw);
