@@ -1,10 +1,9 @@
-function [ y, e, w ] = lms_gs( x, z, umin, umax, ord )
+function [ y, e, w ] = lms_gs_linear( x, z, umax, ord )
 % Modification of the lms function to incorporate basic gear shifting
 
 %% INPUTS
 % x: input vector of signal yet to be filtered by unknown system
 % z: output of the unknown system (from x), plus WGN
-% umin: adaptation gain to be used when we are converging on the steady state
 % umax: adaptation gain to be used when quickly converging to steady state
 % ord: the order of the system we are attempting to estimate parameters for
 
