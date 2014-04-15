@@ -14,7 +14,7 @@ z = y + n;
 % Use out lms function to estimate coefficients
 [~, e_lms, w_lms] = lms(x, z, 0.005, Nw);
 [~, e_lms_gs, w_lms_gs] = lms_gs(x, z, 0.005, 0.1, Nw);
-[~, e_lms_lin, w_lms_lin] = lms_gs_linear(x, z, 0.005, 0.1, Nw);
+[~, e_lms_lin, w_lms_lin] = lms_gs_linear(x, z, 0.1, Nw);
 
 
 % Plot the results

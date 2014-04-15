@@ -43,7 +43,6 @@ for i = ord+1:N
     if (e(i)^2 > 15)
         u = umax;
     else
-        sprintf('here')
         u = umin;
     end
 
