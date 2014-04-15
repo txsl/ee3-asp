@@ -88,3 +88,4 @@ for i = 1:6
     recorded_snr(i) = snr(y, n);
     
 end
+
