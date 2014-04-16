@@ -1,5 +1,5 @@
 function [ y, e, w ] = lms_gs_linear( x, z, umax, ord )
-% Modification of the lms function to incorporate basic gear shifting
+% Modification of the lms_gs function to linear gear shifting
 
 %% INPUTS
 % x: input vector of signal yet to be filtered by unknown system
