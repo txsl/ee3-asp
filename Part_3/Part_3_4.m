@@ -45,17 +45,17 @@ for i = 1:3
         xlabel('Model Order');
         ylabel('Model Error');
         grid on;
-        title(sprintf('MLD Estimate for "three" tone with \\sigma=%1.1f', var_coeffs(i)));
+        title(sprintf('MDL Estimate for "three" tone with \\sigma=%1.1f', var_coeffs(i)));
     
     subplot(2,3,i+3);
     plot(1:100, star_error(i,:));
         xlabel('Model Order');
         ylabel('Model Error');
         grid on;
-        title(sprintf('MLD Estimate for "star" tone with \\sigma=%1.1f', var_coeffs(i)));
+        title(sprintf('MDL Estimate for "star" tone with \\sigma=%1.1f', var_coeffs(i)));
 end
 
-% These are the chosen model orders (based on the MLD plots)
+% These are the chosen model orders (based on the MDL plots)
 three_order = [ 45 42 42 ];
 star_order = [ 18 18 38 ];
 
