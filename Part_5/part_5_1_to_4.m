@@ -88,7 +88,7 @@ stem(f, bad_2 - good_2, 'Marker', 'None');
 [b2_1500, a2_1500] = butter(3, [1440/(FS/2), 1560/(FS/2)], 'stop');
 
 % And the 200Hz tick
-[b2_200, a2_200] = butter(3, [140/(FS/2), 240/(FS/2)], 'stop');
+[b2_200, a2_200] = butter(3, [180/(FS/2), 220/(FS/2)], 'stop');
 
 % Plot what the frequency response looks like
 figure;
@@ -117,7 +117,7 @@ filtered_2 = s2h(:,2);
 filtered_2 = filter(b2_200, a2_200, filtered_2);
 filtered_2 = filter(b2_1500, a2_1500, filtered_2);
 
-sound(filtered_1, FS)
+sound(filtered_2, FS)
 
 
 %% 5.4
@@ -175,6 +175,6 @@ stem(f, filtered_2_pgm, 'Marker', 'none', 'Color', 'g');
     ylabel('Power');
     title('Channel 2 Filtered Signal');
     
-error_1 = norm(good_1 - filtered_1_pgm)/norm(good_1) ;
+error_1 = rel_error(good_1, filtered_1_pgm);
 
-error_2 = norm(good_2 - filtered_2_pgm)/norm(good_2) ;
+error_2 = rel_error(good_2, filtered_2_pgm);
