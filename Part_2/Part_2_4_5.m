@@ -42,13 +42,15 @@ end
 
 figure;
 hold on;
-plot(x1);
-plot(x2, 'c');
-plot(x10, 'g');
-plot(actual, 'r');
+range = -9:10;
+plot(range, x1);
+plot(range, x2, 'c');
+plot(range, x10, 'g');
+plot(range, actual, 'r');
+hold off;
     grid on;
     legend('AR(1)', 'AR(2)', 'AR(10)', 'Actual', 'Location', 'North');
-    xlim([1 20]);
-    xlabel('Years');
+    xlim([-9 10]);
+    xlabel('Prediction Horizon (Years)');
     ylabel('No of Sunspots');
     title('Actual and Estimated Sunspots, based on varying order AR models');
